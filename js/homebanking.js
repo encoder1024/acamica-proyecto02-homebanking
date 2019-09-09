@@ -5,7 +5,7 @@ var limiteExtraccion = 5000;
 
 //Ejecución de las funciones que actualizan los valores de las variables en el HTML.
 window.onload = function() {
-    iniciarSesion(); //TODO: ultimo paso de la guia 3.
+    iniciarSesion(); 
     cargarNombreEnPantalla();
     actualizarSaldoEnPantalla();
     actualizarLimiteEnPantalla();
@@ -69,24 +69,22 @@ function depositarDinero() {
 }
 
 function pagarServicio() {
-    var serviciosPorPagar = [["Agua", 350], ["Luz", 210], ["Internet", 570], ["Teléfono", 425]];
+    var serviciosPorPagar = [["Agua", 350], ["Luz", 210], ["Internet", 570], ["Teléfono", 425]]; //defino la variable como un array de arrays.
     var opcionServicio = prompt("Ingresa el número que corresponda con el servicio que quieres pagar:\n1-Agua\n2-Luz\n3-Internet\n4-Teléfono");
 
     var opcion = parseInt(opcionServicio); 
 
     //Compruebo si es un valor numérico 
     if (isNaN(opcion)) { 
-        //entonces (no es numero) devuelvo un mensaje de error. 
-        //alert("Ingresa un número válido por favor. \n Gracias.");
         return;
     } else if((opcion > 4) || (opcion < 1)) { 
-        //(Si era un número) devuelvo el valor si es distinto de cero. 
+        //(Si era un número) validoq ue la opciónn esté entre 1 y 4. 
         alert("Ingresaste una opción no válida. \n Gracias.");
         return;
     }
-    if(esMenorSaldoDisp(serviciosPorPagar[opcion-1] [1])){
+    if(esMenorSaldoDisp(serviciosPorPagar[opcion-1] [1])){ // opcion-1 hace que respete el rango del index del array con la opción elegida.
         var saldoAnterior = saldoCuenta;
-        restarDinero(serviciosPorPagar[opcion-1] [1]);
+        restarDinero(serviciosPorPagar[opcion-1] [1]); //tomo el valor del monto del servicio elegido 
         actualizarSaldoEnPantalla();
         alert("Has pagado el servicio " + serviciosPorPagar[opcion-1] [0] + "." + "\n" + 
         "Saldo anterior: $" + saldoAnterior + "\n" + 
@@ -131,7 +129,7 @@ function transferirDinero() {
             //entonces (no es numero) devuelvo un mensaje de error. 
             //alert("Ingresa un número válido por favor. \n Gracias.");
             return;
-        } else if(cuentaIngresada.length < 7) { 
+        } else if(cuentaIngresada.length != 7) { 
             //(Si era un número) salgo si el número de cuenta no tiene 7 digitos. 
             alert("Ingresaste una cuenta no válida. \n Gracias.");
             return;
@@ -241,12 +239,11 @@ function obtenerCantDinero(tipo) {
 
     //Compruebo si es un valor numérico 
     if (isNaN(valor)) { 
-        //entonces (no es numero) devuelvo un mensaje de error. 
-        //alert("Ingresa un número válido por favor. \n Gracias." + valor);
+        //entonces (no es numero) devuelvo un valor sin cambios. 
         if(tipo == "limite") {
-            return limiteExtraccion;
+            return limiteExtraccion; // mantiene el mismo límite de extracción.
         }
-        return 0;
+        return 0; // hace que al sumar o resta 0, el saldo no cambie.
     } else if(valor <= 0) { 
         //(Si era un número) devuelvo el valor si es distinto de cero. 
         alert("Ingresaste $0, por lo tanto no se registrará. \n Gracias.");
