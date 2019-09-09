@@ -6,6 +6,7 @@ var limiteExtraccion = 5000;
 
 //Ejecución de las funciones que actualizan los valores de las variables en el HTML.
 window.onload = function() {
+    iniciarSesion(); //TODO: ultimo paso d ela guia 3.
     cargarNombreEnPantalla();
     actualizarSaldoEnPantalla();
     actualizarLimiteEnPantalla();
@@ -99,11 +100,11 @@ function pagarServicio() {
 }
 
 function transferirDinero() {
-
+    //TODO: voy a utilizar switch en esta funcion 
 }
 
 function iniciarSesion() {
-
+    //TODO: esta función debe ejecutarse antes que cualquier otra en el arranque
 }
 
 function esMenorLimiteExt (valor) {
