@@ -3,10 +3,9 @@ var nombreUsuario = "Jana Ferrer";
 var saldoCuenta = 100000;
 var limiteExtraccion = 5000;
 
-
 //Ejecución de las funciones que actualizan los valores de las variables en el HTML.
 window.onload = function() {
-    iniciarSesion(); //TODO: ultimo paso d ela guia 3.
+    iniciarSesion(); //TODO: ultimo paso de la guia 3.
     cargarNombreEnPantalla();
     actualizarSaldoEnPantalla();
     actualizarLimiteEnPantalla();
@@ -64,21 +63,21 @@ function depositarDinero() {
     if(saldoAnterior != saldoCuenta) {
         actualizarSaldoEnPantalla();
         alert("Has depositado: $" + dineroVerif + "\n" +
-            "Saldo anterior: $" + saldoAnterior + "\n" +
-            "Saldo actual: $" + saldoCuenta);
+        "Saldo anterior: $" + saldoAnterior + "\n" +
+        "Saldo actual: $" + saldoCuenta);
     }    
 }
 
 function pagarServicio() {
     var serviciosPorPagar = [["Agua", 350], ["Luz", 210], ["Internet", 570], ["Teléfono", 425]];
-    var opcionServicio = prompt("Ingreses el número que corresponda con el servicio que quieres pagar:\n1-Agua\n2-Luz\n3-Internet\n4-Teléfono");
+    var opcionServicio = prompt("Ingresa el número que corresponda con el servicio que quieres pagar:\n1-Agua\n2-Luz\n3-Internet\n4-Teléfono");
 
     var opcion = parseInt(opcionServicio); 
 
     //Compruebo si es un valor numérico 
     if (isNaN(opcion)) { 
         //entonces (no es numero) devuelvo un mensaje de error. 
-        alert("Ingresa un número válido por favor. \n Gracias.");
+        //alert("Ingresa un número válido por favor. \n Gracias.");
         return;
     } else if((opcion > 4) || (opcion < 1)) { 
         //(Si era un número) devuelvo el valor si es distinto de cero. 
@@ -90,9 +89,9 @@ function pagarServicio() {
         restarDinero(serviciosPorPagar[opcion-1] [1]);
         actualizarSaldoEnPantalla();
         alert("Has pagado el servicio " + serviciosPorPagar[opcion-1] [0] + "." + "\n" + 
-            "Saldo anterior: $" + saldoAnterior + "\n" + 
-            "Dinero descontado: $" + serviciosPorPagar[opcion-1] [1] + "\n" +
-            "Saldo actual: $" + saldoCuenta);
+        "Saldo anterior: $" + saldoAnterior + "\n" + 
+        "Dinero descontado: $" + serviciosPorPagar[opcion-1] [1] + "\n" +
+        "Saldo actual: $" + saldoCuenta);
     } else {
         alert("No hay suficiente saldo en tu cuenta para pagar este servicio");
     }
@@ -101,10 +100,105 @@ function pagarServicio() {
 
 function transferirDinero() {
     //TODO: voy a utilizar switch en esta funcion 
+    var cuentaAmiga1 = 1234567;
+    var cuentaAmiga2 = 7654321;
+
+    var dineroIngresado = prompt("Ingresa el monto de dinero a tranferir:");
+
+    var dineroTransferir = parseInt(dineroIngresado); 
+
+    //Compruebo si es un valor numérico 
+    if (isNaN(dineroTransferir)) { 
+        //entonces (no es numero) devuelvo un mensaje de error. 
+        //alert("Ingresa un número válido por favor. \n Gracias.");
+        return;
+    } else if(dineroTransferir <= 0) { 
+        //(Si era un número) devuelvo el valor si es distinto de cero. 
+        alert("Ingresaste $0, por lo tanto no se registrará. \n Gracias.");
+        return;
+    }
+
+    if(esMenorSaldoDisp(dineroTransferir)){
+
+        var cuentaIngresada = prompt("Ingresa el número que corresponda a la cuenta destino:");
+
+        var cuentaDestino = parseInt(cuentaIngresada); 
+
+        console.log(cuentaDestino, cuentaIngresada.length);
+    
+        //Compruebo si es un valor numérico 
+        if (isNaN(cuentaDestino)) { 
+            //entonces (no es numero) devuelvo un mensaje de error. 
+            //alert("Ingresa un número válido por favor. \n Gracias.");
+            return;
+        } else if(cuentaIngresada.length < 7) { 
+            //(Si era un número) salgo si el número de cuenta no tiene 7 digitos. 
+            alert("Ingresaste una cuenta no válida. \n Gracias.");
+            return;
+        }
+    
+        switch (cuentaDestino) {
+            case 1234567:
+                break;
+            case 7654321:
+                break;
+            default:
+                alert("Ingresaste una cuenta que no es tuya. \n Gracias.");
+                return;
+        }
+
+        restarDinero(dineroTransferir);
+        actualizarSaldoEnPantalla();
+        alert("Se han tranferido: $" + dineroTransferir + "\n" + "Cuenta destino: " + cuentaDestino);
+    } else {
+        alert("No hay suficiente saldo en tu cuenta para hacer la transferencia.");
+    }
+
+
+
 }
+
+
 
 function iniciarSesion() {
     //TODO: esta función debe ejecutarse antes que cualquier otra en el arranque
+    var claveActual = 1234;
+    var esAutorizado = false;
+    var intentos = 1;
+    while(!esAutorizado){
+        var claveIngresada = prompt("Ingresa la clave de tu cuenta:");
+
+        var clave = parseInt(claveIngresada); 
+
+        //Compruebo si es un valor numérico 
+        if (isNaN(clave)) { 
+            //entonces (no es numero) devuelvo un mensaje de error. 
+            //alert("Ingresa un número válido por favor. \n Gracias.");
+            continue;
+        } else if(claveIngresada.length != 4 ) { 
+            //(Si era un número) salgo si el número de cuenta no tiene 7 digitos.
+            console.log(clave, claveActual); 
+            alert("Ingresaste una clave no válida. \n Gracias.");
+            continue;
+        }
+
+        console.log(clave, claveActual);
+
+        if(clave == claveActual) {
+            alert("Bienvenido/a " + nombreUsuario + " ya puedes comenzar a realizar operaciones.");
+            esAutorizado = !esAutorizado;
+            console.log(esAutorizado);
+        } else {
+            alert("Código incorrecto " + intentos + " de 3." + " Tu dinero ha sido retenido por cuestiones de seguridad.");
+            intentos++;
+            if (intentos >= 4) {
+                alert("No tienes más intentos, llama al 0800.");
+                while(true){}
+            }
+        }
+    }    
+
+
 }
 
 function esMenorLimiteExt (valor) {
@@ -148,7 +242,7 @@ function obtenerCantDinero(tipo) {
     //Compruebo si es un valor numérico 
     if (isNaN(valor)) { 
         //entonces (no es numero) devuelvo un mensaje de error. 
-        alert("Ingresa un número válido por favor. \n Gracias.");
+        //alert("Ingresa un número válido por favor. \n Gracias." + valor);
         if(tipo == "limite") {
             return limiteExtraccion;
         }
